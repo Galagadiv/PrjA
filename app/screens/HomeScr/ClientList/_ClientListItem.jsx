@@ -1,9 +1,9 @@
 import React from "react";
 import {Text, View, Pressable} from "react-native";
 import {basic} from "~/styles/basic.styles";
-import DeleteIcon from "~/assets/images/icon-delete.svg";
+// import DeleteIcon from "~/assets/images/icon-delete.svg";
 
-export function ClinetListItem({item, index, onDelete}) {
+export function ClientListItem({item, index, onDelete}) {
 	return (
 		<View style={basic.itemContainer}>
 			<Pressable style={basic.itemLookArea}>
@@ -11,7 +11,7 @@ export function ClinetListItem({item, index, onDelete}) {
 				<Text style={basic.itemTextDate}>Date</Text>
 			</Pressable>
 			<Pressable onPress={onDelete} style={basic.itemDelBtn}>
-				<DeleteIcon style={basic.itemDelBtnImg} />
+				{/* <DeleteIcon style={basic.itemDelBtnImg} /> */}
 			</Pressable>
 		</View>
 	);

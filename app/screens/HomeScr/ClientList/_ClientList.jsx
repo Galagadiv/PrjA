@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import {Text, View, FlatList, Pressable} from "react-native";
 import {basic} from "~/styles/basic.styles";
-import {Item} from "./_ClientListItem";
+import {ClientListItem} from "./_ClientListItem";
 import {AddClientModal} from "./modals/_AddClientModal";
-import AddIcon from "~/assets/images/icon-add.svg";
+// import AddIcon from "~/assets/images/icon-add.svg";
 
 export function ClientList() {
 	const [clients, setClients] = useState([]);
@@ -47,7 +47,11 @@ export function ClientList() {
 				data={clients}
 				keyExtractor={(item, index) => index.toString()}
 				renderItem={({item, index}) => (
-					<Item item={item} index={index} onDelete={() => delItem(index)} />
+					<ClientListItem
+						item={item}
+						index={index}
+						onDelete={() => delItem(index)}
+					/>
 				)}
 			/>
 		</View>

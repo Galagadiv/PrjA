@@ -78,13 +78,41 @@ export const basic = StyleSheet.create({
 		height: 20,
 		fill: "#fff",
 	},
-	addModalcontainer: {
-		// width: 100,
-		// height: 100,
+	AddModal: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		paddingHorizontal: 10,
+	},
+	addModalContainer: {
+		height: 150,
+		// paddingHorizontal: 10,
+		backgroundColor: "#D9EAFD",
+		justifyContent: "center",
+		alignItems: "center",
+		borderRadius: 15,
+		borderWidth: 1,
+	},
+	addModalInput: {
+		backgroundColor: "#fff",
+		borderRadius: 5,
+		borderWidth: 1,
+		marginBottom: 10,
+	},
+
+	addModalBtnsContainer: {
+		flexDirection: "row",
+		// justifyContent: "space-between",
+		gap: 50,
+	},
+	buttonClose: {
+		justifyContent: "center",
+		alignItems: "center",
+		width: 75,
+		height: 40,
 		backgroundColor: "#CC2B52",
-		position: "absolute",
-		// top: 50,
-		// left: 50,
+		borderRadius: 5,
+		borderWidth: 1,
 	},
 	itemTextName: {
 		fontSize: 20,

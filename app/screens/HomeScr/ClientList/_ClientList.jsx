@@ -6,52 +6,51 @@ import AddClientModal from "./modals/_AddClientModal";
 import DeleteClientModal from "./modals/_DelModal";
 
 export default function ClientList() {
+	// Стан для списку клієнтів та модалок
 	const [clients, setClients] = useState([]);
 	const [addModal, setAddModal] = useState(false);
 	const [delModal, setDelModal] = useState(false);
 
+	// Стан для керування ім'ям клієнта та вибраним клієнтом для видалення
 	const [clientName, setClientName] = useState("");
 	const [clientToDelete, setClientToDelete] = useState(null);
 
-	// Відкрити/закрити модальне вікно
+	// Відкрити/закрити модальне вікно додавання
 	const openAddModal = () => setAddModal(true);
 	const closeAddModal = () => {
 		setAddModal(false);
 		setClientName("");
 	};
-
-	// const openDelModal = () => setDelModal(true);
-	const openDelModal = (index, clientName) => {
-		setClientToDelete({index, clientName}); // зберігаємо індекс і ім'я клієнта
-		setDelModal(true); // відкриваємо модалку
-	};
-	const closeDelModal = () => setDelModal(false);
-
-	// Додати елемент
+	// Додавання нового клієнта
 	const addItem = () => {
 		if (clientName.trim() !== "") {
 			setClients([...clients, clientName.trim()]);
-			setClientName(""); // Очищення після додавання
 			closeAddModal();
 		}
 	};
 
-	// Видалити конкретний елемент
+	// Відкрити/закрити модальне вікно видалення
+	const openDelModal = (index, clientName) => {
+		setClientToDelete({index, clientName});
+		setDelModal(true);
+	};
+	const closeDelModal = () => setDelModal(false);
+	// Видалення клієнта
 	const delItem = () => {
 		if (clientToDelete) {
-			setClients(clients.filter((_, i) => i !== clientToDelete.index)); // видаляємо елемент за індексом
-			setDelModal(false); // закриваємо модалку
+			setClients(clients.filter((_, i) => i !== clientToDelete.index));
+			closeDelModal();
 		}
 	};
 
 	return (
 		<View style={basic.containerListScreen}>
+			{/* Панель керування списком */}
 			<View style={basic.listControlPanel}>
-				<Pressable
-					onPress={openAddModal}
-					style={basic.listControlBtns}
-				></Pressable>
+				<Pressable onPress={openAddModal} style={basic.listControlBtns} />
 			</View>
+
+			{/* Модальне вікно додавання клієнта */}
 			<AddClientModal
 				visible={addModal}
 				onClose={closeAddModal}
@@ -59,6 +58,8 @@ export default function ClientList() {
 				clientName={clientName}
 				setClientName={setClientName}
 			/>
+
+			{/* Модальне вікно видалення клієнта */}
 			<DeleteClientModal
 				visible={delModal}
 				onClose={closeDelModal}
@@ -66,6 +67,7 @@ export default function ClientList() {
 				clientName={clientToDelete ? clientToDelete.clientName : ""}
 			/>
 
+			{/* Список клієнтів */}
 			<FlatList
 				style={basic.listClients}
 				data={clients}
@@ -74,7 +76,7 @@ export default function ClientList() {
 					<ClientListItem
 						item={item}
 						index={index}
-						onDelete={() => openDelModal(index, item)} // передаємо індекс і ім'я клієнта
+						onDelete={() => openDelModal(index, item)}
 					/>
 				)}
 			/>

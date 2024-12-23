@@ -1,5 +1,5 @@
 import React from "react";
-import {ClientList} from "./ClientList/_ClientList";
+import ClientList from "./ClientList/_ClientList";
 
 export default function HomeScr() {
 	return (

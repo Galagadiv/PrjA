@@ -2,7 +2,7 @@ import React from "react";
 import {View, TextInput, Pressable, Modal, Text} from "react-native";
 import {basic} from "~/styles/basic.styles";
 
-export function AddClientModal({
+export default function AddClientModal({
 	visible,
 	onClose,
 	onAdd,
@@ -28,7 +28,7 @@ export function AddClientModal({
 						<Pressable style={basic.buttonClose} onPress={onAdd}>
 							<Text style={basic.textStyle}>Add</Text>
 						</Pressable>
-						<Pressable style={basic.buttonClose}>
+						<Pressable style={basic.buttonClose} onPress={onClose}>
 							<Text style={basic.textStyle}>Cancel</Text>
 						</Pressable>
 					</View>

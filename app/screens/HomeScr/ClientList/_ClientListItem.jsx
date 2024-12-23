@@ -1,9 +1,8 @@
 import React from "react";
 import {Text, View, Pressable} from "react-native";
 import {basic} from "~/styles/basic.styles";
-// import DeleteIcon from "~/assets/images/icon-delete.svg";
 
-export function ClientListItem({item, index, onDelete}) {
+export default function ClientListItem({item, index, onDelete}) {
 	return (
 		<View style={basic.itemContainer}>
 			<Pressable style={basic.itemLookArea}>

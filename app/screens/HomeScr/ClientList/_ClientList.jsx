@@ -1,18 +1,31 @@
 import React, {useState} from "react";
 import {Text, View, FlatList, Pressable} from "react-native";
 import {basic} from "~/styles/basic.styles";
-import {ClientListItem} from "./_ClientListItem";
-import {AddClientModal} from "./modals/_AddClientModal";
-// import AddIcon from "~/assets/images/icon-add.svg";
+import ClientListItem from "./_ClientListItem";
+import AddClientModal from "./modals/_AddClientModal";
+import DeleteClientModal from "./modals/_DelModal";
 
-export function ClientList() {
+export default function ClientList() {
 	const [clients, setClients] = useState([]);
 	const [addModal, setAddModal] = useState(false);
+	const [delModal, setDelModal] = useState(false);
+
 	const [clientName, setClientName] = useState("");
+	const [clientToDelete, setClientToDelete] = useState(null);
 
 	// Відкрити/закрити модальне вікно
 	const openAddModal = () => setAddModal(true);
-	const closeAddModal = () => setAddModal(false);
+	const closeAddModal = () => {
+		setAddModal(false);
+		setClientName("");
+	};
+
+	// const openDelModal = () => setDelModal(true);
+	const openDelModal = (index, clientName) => {
+		setClientToDelete({index, clientName}); // зберігаємо індекс і ім'я клієнта
+		setDelModal(true); // відкриваємо модалку
+	};
+	const closeDelModal = () => setDelModal(false);
 
 	// Додати елемент
 	const addItem = () => {
@@ -24,16 +37,20 @@ export function ClientList() {
 	};
 
 	// Видалити конкретний елемент
-	const delItem = (index) => {
-		setClients(clients.filter((_, i) => i !== index));
+	const delItem = () => {
+		if (clientToDelete) {
+			setClients(clients.filter((_, i) => i !== clientToDelete.index)); // видаляємо елемент за індексом
+			setDelModal(false); // закриваємо модалку
+		}
 	};
 
 	return (
 		<View style={basic.containerListScreen}>
 			<View style={basic.listControlPanel}>
-				<Pressable onPress={openAddModal} style={basic.listControlBtns}>
-					{/* <AddIcon style={basic.itemDelBtnImg} /> */}
-				</Pressable>
+				<Pressable
+					onPress={openAddModal}
+					style={basic.listControlBtns}
+				></Pressable>
 			</View>
 			<AddClientModal
 				visible={addModal}
@@ -42,6 +59,13 @@ export function ClientList() {
 				clientName={clientName}
 				setClientName={setClientName}
 			/>
+			<DeleteClientModal
+				visible={delModal}
+				onClose={closeDelModal}
+				onDel={delItem}
+				clientName={clientToDelete ? clientToDelete.clientName : ""}
+			/>
+
 			<FlatList
 				style={basic.listClients}
 				data={clients}
@@ -50,7 +74,7 @@ export function ClientList() {
 					<ClientListItem
 						item={item}
 						index={index}
-						onDelete={() => delItem(index)}
+						onDelete={() => openDelModal(index, item)} // передаємо індекс і ім'я клієнта
 					/>
 				)}
 			/>

@@ -1,11 +1,16 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {formatDateTime} from "~/constants/_date";
+import addData from "~/constants/_addData";
+import {useDatabase} from "~/hooks/_useDatabase";
 
 export function useClientListLogic() {
 	// Стан для списку клієнтів та модалок
 	const [clients, setClients] = useState([]);
 	const [addModal, setAddModal] = useState(false);
 	const [delModal, setDelModal] = useState(false);
+
+	// const db = useDatabase("defaultDB.db");
+	const db = useDatabase("defDB.db");
 
 	// Стан для керування ім'ям клієнта та вибраним клієнтом для видалення
 	const [clientName, setClientName] = useState("");
@@ -25,6 +30,11 @@ export function useClientListLogic() {
 				...clients,
 				{name: clientName.trim(), date: formatDateTime(now)},
 			]);
+			addData(
+				"Clients",
+				["name", "created_at"],
+				[clientName.trim(), formatDateTime(now)]
+			);
 			closeAddModal();
 		}
 	};
@@ -58,3 +68,5 @@ export function useClientListLogic() {
 		delItem,
 	};
 }
+
+export default useClientListLogic;

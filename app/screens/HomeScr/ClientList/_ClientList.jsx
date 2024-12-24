@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Text, View, FlatList, Pressable} from "react-native";
 import {basic} from "~/styles/basic.styles";
 import ClientListItem from "./_ClientListItem";
@@ -25,7 +25,7 @@ export default function ClientList() {
 
 	return (
 		<View style={basic.containerListScreen}>
-			{/* Панель керування списком */}
+			{/* Додавання елементів у список */}
 			<View style={basic.listControlPanel}>
 				<Pressable onPress={openAddModal} style={basic.listControlBtns} />
 			</View>

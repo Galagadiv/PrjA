@@ -4,6 +4,7 @@ import {basic} from "~/styles/basic.styles";
 import ClientListItem from "./_ClientListItem";
 import AddClientModal from "./modals/_AddClientModal";
 import DeleteClientModal from "./modals/_DelModal";
+import {formatDateTime} from "~/constants/_date";
 
 export default function ClientList() {
 	// Стан для списку клієнтів та модалок
@@ -24,7 +25,11 @@ export default function ClientList() {
 	// Додавання нового клієнта
 	const addItem = () => {
 		if (clientName.trim() !== "") {
-			setClients([...clients, clientName.trim()]);
+			const now = new Date(); // Отримуємо поточну дату
+			setClients([
+				...clients,
+				{name: clientName.trim(), date: formatDateTime(now)}, // Додаємо клієнта як об'єкт з датою
+			]);
 			closeAddModal();
 		}
 	};
@@ -74,9 +79,10 @@ export default function ClientList() {
 				keyExtractor={(item, index) => index.toString()}
 				renderItem={({item, index}) => (
 					<ClientListItem
-						item={item}
+						item={item.name}
 						index={index}
-						onDelete={() => openDelModal(index, item)}
+						onDelete={() => openDelModal(index, item.name)}
+						date={item.date}
 					/>
 				)}
 			/>

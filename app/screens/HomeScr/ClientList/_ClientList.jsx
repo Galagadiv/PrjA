@@ -1,52 +1,27 @@
-import React, {useState} from "react";
+import React from "react";
 import {Text, View, FlatList, Pressable} from "react-native";
 import {basic} from "~/styles/basic.styles";
 import ClientListItem from "./_ClientListItem";
 import AddClientModal from "./modals/_AddClientModal";
 import DeleteClientModal from "./modals/_DelModal";
-import {formatDateTime} from "~/constants/_date";
+import {useClientListLogic} from "./_ClientList.logic.jsx";
 
 export default function ClientList() {
-	// Стан для списку клієнтів та модалок
-	const [clients, setClients] = useState([]);
-	const [addModal, setAddModal] = useState(false);
-	const [delModal, setDelModal] = useState(false);
-
-	// Стан для керування ім'ям клієнта та вибраним клієнтом для видалення
-	const [clientName, setClientName] = useState("");
-	const [clientToDelete, setClientToDelete] = useState(null);
-
-	// Відкрити/закрити модальне вікно додавання
-	const openAddModal = () => setAddModal(true);
-	const closeAddModal = () => {
-		setAddModal(false);
-		setClientName("");
-	};
-	// Додавання нового клієнта
-	const addItem = () => {
-		if (clientName.trim() !== "") {
-			const now = new Date(); // Отримуємо поточну дату
-			setClients([
-				...clients,
-				{name: clientName.trim(), date: formatDateTime(now)}, // Додаємо клієнта як об'єкт з датою
-			]);
-			closeAddModal();
-		}
-	};
-
-	// Відкрити/закрити модальне вікно видалення
-	const openDelModal = (index, clientName) => {
-		setClientToDelete({index, clientName});
-		setDelModal(true);
-	};
-	const closeDelModal = () => setDelModal(false);
-	// Видалення клієнта
-	const delItem = () => {
-		if (clientToDelete) {
-			setClients(clients.filter((_, i) => i !== clientToDelete.index));
-			closeDelModal();
-		}
-	};
+	// Отримуємо всі стани та функції з логіки
+	const {
+		clients,
+		addModal,
+		delModal,
+		clientName,
+		clientToDelete,
+		setClientName,
+		openAddModal,
+		closeAddModal,
+		addItem,
+		openDelModal,
+		closeDelModal,
+		delItem,
+	} = useClientListLogic();
 
 	return (
 		<View style={basic.containerListScreen}>
